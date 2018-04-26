@@ -12,11 +12,11 @@
 
 NAME = lem-in
 DIR_LIB = libft
-SRC = main.c
+SRC = main.c parser.c
 BINARIES = $(SRC:.c=.o)
-CC = gcc -Wall -Werror -Wextra -g # ENLEVER LE G
+CC = gcc -Wall -Werror -Wextra -g #enlever le -g
 
-all: $(NAME) $(DIR_LIB)
+all: $(DIR_LIB) $(NAME)
 
 $(NAME):  $(BINARIES)
 	$(CC) $(BINARIES) -o $(NAME) -I libft/includes -L $(DIR_LIB) -lft
