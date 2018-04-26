@@ -10,8 +10,7 @@ char **parser_parse_line(void)
 	while (input[0] == '#' && input[1] != '#')
 	{
 		free(input);
-		if (get_next_line(0, &input) <= 0)
-			return (0);
+		return (parser_parse_line());
 	}
 	info = ft_strsplit(input, ' ');
 	free(input);
@@ -23,6 +22,18 @@ char **parser_parse_line(void)
 		return (0);
 	}
 	return (info);
+}
+
+void parser_free(char **info)
+{
+	int i;
+
+	if (!info)
+		return ;
+	i = -1;
+	while (info[++i])
+		free(info[i]);
+	free(info);
 }
 
 void parser_parse_nb_ants(t_data *data)
@@ -37,40 +48,34 @@ void parser_parse_nb_ants(t_data *data)
 		error_message();
 	}
 	i = -1;
-	while (info[0][++i])
+	if (!ft_isnumber(info[0]))
 	{
-		if (!ft_isdigit(info[0][i]))
-		{
-			parser_free(info);
-			error_message();
-		}
+		parser_free(info);
+		error_message();
 	}
 	nb_ants = ft_atoi_long(info[0]);
 	parser_free(info);
-	if (nb_ants > 2147483647 || nb_ants < -2147483648)
+	if (nb_ants > 2147483647 || nb_ants < -2147483648 || !nb_ants)
 		error_message();
-	data->nb_ants = nb_ants;
+	data->nb_ants = (int)nb_ants;
 }
 
-// chaque salle est une structure qui a un tableau de pointeurs vers celles auxquelles elle est liée
-int parser_parse_rooms(t_data *data)
+void parser_parse_field_data(t_data *data)
 {
+	char **info;
+	int len;
 
-}
-
-int parser_parse_tunnels(t_data *data)
-{
-
-}
-
-void parser_free(char **info)
-{
-	int i;
-
-	if (!info)
-		return ;
-	i = -1;
-	while (info[++i])
-		free(info[i]);
-	free(info);
+	while (info = parser_parse_line())
+	{
+		if (!(len = ft_strtablen(info)) || len == 2 || len > 3)
+			return ;
+		else if (len == 1 && ft_strequ(info[0], "##start"))
+			data->start_next = 1;
+		else if (len == 1 && ft_strequ(info[0], "##end"))
+			data->end_next = 1;
+		else if (len == 3 && !room_add())
+			return ;
+		else if (len == 1 && !link_add())
+			return ;
+	}
 }

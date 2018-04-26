@@ -88,6 +88,7 @@ void				type_percent(t_env *e);
 void				type_b(t_env *e);
 
 int					ft_isdigit(int c);
+int					ft_isnumber(char *s);
 int					ft_isalpha(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
@@ -98,6 +99,7 @@ void				ft_putchar(char c);
 void				ft_putstr(char const *s);
 void				ft_putnbr(int n);
 size_t				ft_strlen(const char *s);
+size_t				ft_strtablen(const char **tab);
 char				*ft_strdup(const char *s1);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strequ(char const *s1, char const *s2);

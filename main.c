@@ -8,11 +8,20 @@ void error_message(void)
 	exit(0);
 }
 
+void initialize_data(t_data *data)
+{
+	data->nb_ants = 0;
+	data->start_next = 0;
+	data->end_next = 0;
+	data->rooms = 0;
+}
+
 int main(void)
 {
 	t_data data;
 
+	initialize_data(&data);
 	parser_parse_nb_ants(&data);
-	parser_parse_rooms()
+	parser_parse_field_data(&data);
 	ft_printf("nb of ants = %d\n", data.nb_ants);
 }
