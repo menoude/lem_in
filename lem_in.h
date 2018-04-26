@@ -11,6 +11,10 @@ struct s_data
 	int nb_ants;
 };
 
-int parser_nb_ants(t_data *data);
+void error_message(void);
+
+char	**parser_parse_line(void);
+void	parser_nb_ants(t_data *data);
+void	parser_free(char **info);
 
 #endif

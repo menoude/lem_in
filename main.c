@@ -12,7 +12,7 @@ int main(void)
 {
 	t_data data;
 
-	if (!parser_nb_ants(&data))
-		error_message();
-	ft_printf("hello\n");
+	parser_parse_nb_ants(&data);
+	parser_parse_rooms()
+	ft_printf("nb of ants = %d\n", data.nb_ants);
 }
