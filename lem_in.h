@@ -11,6 +11,8 @@ typedef struct s_link t_link;
 struct s_room
 {
 	char	*name;
+	int		x;
+	int		y;
 	int		nb_links;
 	t_room	*links;
 	int		full;
@@ -44,6 +46,8 @@ void	parser_parse_nb_ants(t_data *data);
 void	parser_free(char **info);
 void	parser_parse_field_data(t_data *data);
 
+int		room_valid(t_data *data, char **info);
+int room_initiliaze(t_data *data, t_room *room, char **info);
 int		room_add(t_data *data, char **info);
 void	room_free(t_room *rooms);
 

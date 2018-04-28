@@ -25,7 +25,6 @@ int main(void)
 	initialize_data(&data);
 	parser_parse_nb_ants(&data);
 	parser_parse_field_data(&data);
-	// check que deux rooms ont pas le meme nom ou les memes coordonnées...
 	ft_printf("nb of ants = %d\n", data.nb_ants);
 	room_free(data.rooms);
 }
