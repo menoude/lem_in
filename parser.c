@@ -65,17 +65,23 @@ void parser_parse_field_data(t_data *data)
 	char **info;
 	int len;
 
-	while (info = parser_parse_line())
+	while ((info = parser_parse_line()))
 	{
-		if (!(len = ft_strtablen(info)) || len == 2 || len > 3)
+		if (!(len = ft_strtablen((const char **)info)) || len == 2 || len > 3)
+		{
+			parser_free(info);
 			return ;
+		}
 		else if (len == 1 && ft_strequ(info[0], "##start"))
-			data->start_next = 1;
+			data->starting = 1;
 		else if (len == 1 && ft_strequ(info[0], "##end"))
-			data->end_next = 1;
-		else if (len == 3 && !room_add())
+			data->ending = 1;
+		else if ((len == 3 && !room_add(data, info))
+				|| (len == 1 && !link_add(data, info[0])))
+		{
+			parser_free(info);
 			return ;
-		else if (len == 1 && !link_add())
-			return ;
+		}
+		parser_free(info);
 	}
 }
