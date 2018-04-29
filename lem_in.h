@@ -39,6 +39,10 @@ struct s_data
 	int		ending;
 };
 
+////////////
+void print_rooms(t_data *data);
+/////////////
+
 void error_message(void);
 
 char	**parser_parse_line(void);

@@ -18,6 +18,24 @@ void initialize_data(t_data *data)
 	data->links = 0;
 }
 
+void print_rooms(t_data *data)
+{
+	t_room *ptr;
+
+	ptr = data->rooms;
+	if (!ptr)
+	{
+		ft_printf("no room\n");
+		return ;
+	}
+	while (ptr->next)
+	{
+		ft_printf("name = %s, x = %d, y = %d\n", ptr->name, ptr->x, ptr->y);
+		ft_printf("nb_links = %s, start = %d, end = %d\n", ptr->nb_links, ptr->start, ptr->end);
+		ptr = ptr->next;
+	}
+}
+
 int main(void)
 {
 	t_data data;
@@ -26,5 +44,8 @@ int main(void)
 	parser_parse_nb_ants(&data);
 	parser_parse_field_data(&data);
 	ft_printf("nb of ants = %d\n", data.nb_ants);
+	print_rooms(&data);
+	// print_links(&data);
 	room_free(data.rooms);
+	return (0);
 }
