@@ -9,14 +9,35 @@ void	room_free(t_room *rooms)
 	free(rooms);
 }
 
+// initialise un nouveau maillon room et renvoie 0 en cas d'erreur
+int room_initiliaze(t_data *data, t_room *room, char **info)
+{
+	if (!(room = ft_memalloc(sizeof(t_room))))
+		return (0);
+	room->name = ft_strdup(info[0]);
+	room->x = ft_atoi(info[1]);
+	room->y = ft_atoi(info[2]);
+	room->links = 0;
+	room->nb_links = 0;
+	room->full = 0;
+	room->start = data->starting;
+	room->end = data->ending;
+	room->next = 0;
+	return (1);
+}
+
+// check s'il n'y a pas d'erreur avec les booleens
+// check si les coordonnees sont des nombres compris entre 0 et intmax
+// si c'est la premiere room, renvoie 1, sinon check les rooms preecistantes
+// qu'il n'y ai pas le meme nom ou memes coordonnees
 int		room_valid(t_data *data, char **info)
 {
 	t_room *ptr;
 	long int x;
 	long int y;
 
-	if ((data->starting && data->ending) ||
-		!ft_isnumber(info[1]) || !ft_isnumber(info[2]))
+	if ((data->starting && data->ending)
+		|| !ft_isnumber(info[1]) || !ft_isnumber(info[2]))
 		return (0);
 	x = ft_atoi_long(info[1]);
 	y = ft_atoi_long(info[2]);
@@ -34,29 +55,18 @@ int		room_valid(t_data *data, char **info)
 	return (1);
 }
 
-int room_initiliaze(t_data *data, t_room *room, char **info)
-{
-	if (!(room = ft_memalloc(sizeof(t_room))))
-		return (0);
-	room->name = ft_strdup(info[0]);
-	room->x = ft_atoi(info[1]);
-	room->y = ft_atoi(info[2]);
-	room->nb_links = 0;
-	room->full = 0;
-	room->start = data->starting ? 1 : 0;
-	room->end = data->ending ? 1 : 0;
-	room->next = 0;
-	return (1);
-}
 // check qu'on en soit pas deja aux liens, que la room est au bon format
 // qu'elle n'existe pas encore en termes de coordonnees, puis la crée
+// check qu'il n'y a pas de pb a la creation, puis la place au bon endroit
+// de la liste chainee. Reset start et end et incremente le nb de rooms
 int		room_add(t_data *data, char **info)
 {
 	t_room *room;
 	t_room *ptr;
 
 	room = 0;
-	if (!room_valid(data, info) || !room_initiliaze(data, room, info))
+	if (data->rooms_over || !room_valid(data, info)
+		|| !room_initiliaze(data, room, info))
 		return (0);
 	if (!data->rooms)
 		data->rooms = room;
