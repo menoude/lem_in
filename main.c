@@ -49,3 +49,5 @@ int main(void)
 	room_free(data.rooms);
 	return (0);
 }
+// pas encore commit les modifs !
+// euh les doubles noms ca marche ou pas ?

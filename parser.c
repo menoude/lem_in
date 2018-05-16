@@ -40,14 +40,12 @@ void parser_parse_nb_ants(t_data *data)
 {
 	long int	nb_ants;
 	char		**info;
-	int			i;
 
 	if (!(info = parser_parse_line()) || (info[1]))
 	{
 		parser_free(info);
 		error_message();
 	}
-	i = -1;
 	if (!ft_isnumber(info[0]))
 	{
 		parser_free(info);
@@ -67,7 +65,7 @@ void parser_parse_field_data(t_data *data)
 
 	while ((info = parser_parse_line()))
 	{
-		if (!(len = ft_strtablen((const char **)info)) || len == 2 || len > 3)
+		if ((len = ft_strtablen((const char **)info)) != 1 && len != 3)
 		{
 			parser_free(info);
 			return ;
