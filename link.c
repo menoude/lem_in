@@ -10,38 +10,50 @@ void link_free(t_link *links)
 	free(links);
 }
 
-
-int link_initialize(t_data *data, t_link *link, char **info)
-{
-	if (!(link = ft_memalloc(sizeof(t_link))))
-		return (0);
-	link->name1 = ft_strdup(info[0]);
-	link->name2 = ft_strdup(info[1]);
-	link->next = 0;
-	return (1);
-}
-
-// checker que les deux noms existent et que le link n'a pas deja ete defini
-// sauf si c'est le premier link
-int link_valid(t_data *data, char **info)
+int link_exists(t_data *data, char *name1, char *name2)
 {
 	t_link *ptr;
 
-	if (!data->links)
-		return (1);
 	ptr = data->links;
-	while (ptr->next)
+	while (ptr)
 	{
+		if (ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
+			return (1);
+		ptr = ptr->next;
 	}
+	return (0);
+}
+
+int link_initialize(t_link **link, char **info)
+{
+	if (!(*link = ft_memalloc(sizeof(t_link))))
+		return (0);
+	(*link)->name1 = ft_strdup(info[0]);
+	(*link)->name2 = ft_strdup(info[1]);
+	(*link)->next = 0;
 	return (1);
 }
 
-// termine le parsing des rooms, split le buffer autour de '-'
-// //////////
-// check qu'il fait bien 2 elements et que les noms de salles sont valides !!!!!!!!!!!!!!
-// /////////
-//
+// check que le premier element et le deuxieme sont pas vides
+// si c'est le premier link c'est bon
+// checker que les deux noms existent
+// checker la liste des links et verifier qu'un identique n'existe pas deja
+// renvoyer 1
+int link_valid(t_data *data, char **info)
+{
+	if (!info[0] || !info[1])
+		return (0);
+	else if (!room_exists(data, info[0]) || !room_exists(data, info[1]))
+		return (0);
+	else if (!data->links)
+		return (1);
+	else if (link_exists(data, info[0], info[1]))
+		return (0);
+	else
+		return (1);
+}
 
+// termine le parsing des rooms, split le buffer autour de '-'
 int link_add(t_data *data, char *str)
 {
 	char	**info;
@@ -50,8 +62,9 @@ int link_add(t_data *data, char *str)
 
 	data->rooms_over = 1;
 	info = ft_strsplit(str, '-');
+	link = 0;
 	if (ft_strtablen((const char **)info) != 2 || !link_valid(data, info)
-		|| !link_initialize(data, link, info))
+		|| !link_initialize(&link, info))
 	{
 		parser_free(info);
 		return (0);
@@ -65,5 +78,6 @@ int link_add(t_data *data, char *str)
 			ptr = ptr->next;
 		ptr->next = link;
 	}
+	data->nb_links++;
 	return (1);
 }

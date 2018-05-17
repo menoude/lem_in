@@ -13,7 +13,6 @@ struct s_room
 	char	*name;
 	int		x;
 	int		y;
-	int		nb_links;
 	t_room	*links;
 	int		full;
 	int		start;
@@ -35,6 +34,7 @@ struct s_data
 	int		nb_rooms;
 	int		rooms_over;
 	t_link	*links;
+	int		nb_links;
 	int		starting;
 	int		ending;
 };
@@ -51,13 +51,20 @@ void	parser_free(char **info);
 void	parser_parse_field_data(t_data *data);
 
 int		room_valid(t_data *data, char **info);
-int room_initiliaze(t_data *data, t_room *room, char **info);
+int		room_exists(t_data *data, char *name);
+int		room_initiliaze(t_data *data, t_room **room, char **info);
 int		room_add(t_data *data, char **info);
 void	room_free(t_room *rooms);
 
-void link_free(t_link *links);
-int link_add(t_data *data, char *link);
+void	link_free(t_link *links);
+int		link_add(t_data *data, char *link);
+int		link_initialize(t_link **link, char **info);
 
 #endif
 
 // mettre le header dans ft_isnumber dans la libft
+
+// ya un truc a gerer pour start et end
+// genre si j'ai start et start, ou start et end qui se suivent
+// mais qu'il n'y a pas de salle entre les deux, ça doit pas le faire
+// Il doit pas non plus y avoir de start apres la fin des rooms

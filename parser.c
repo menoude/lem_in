@@ -76,7 +76,7 @@ void parser_parse_field_data(t_data *data)
 			parser_free(info);
 			return ;
 		}
-		else if (len == 1 && ft_strequ(info[0], "##start"))
+		if (len == 1 && ft_strequ(info[0], "##start"))
 			data->starting = 1;
 		else if (len == 1 && ft_strequ(info[0], "##end"))
 			data->ending = 1;

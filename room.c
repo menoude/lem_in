@@ -9,26 +9,39 @@ void	room_free(t_room *rooms)
 	free(rooms);
 }
 
-// initialise un nouveau maillon room et renvoie 0 en cas d'erreur
-int room_initiliaze(t_data *data, t_room *room, char **info)
+int room_exists(t_data *data, char *name)
 {
-	if (!(room = ft_memalloc(sizeof(t_room))))
+	t_room *ptr;
+
+	ptr = data->rooms;
+	while (ptr)
+	{
+		if (ft_strequ(ptr->name, name))
+			return (1);
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
+// initialise un nouveau maillon room et renvoie 0 en cas d'erreur
+int room_initiliaze(t_data *data, t_room **room, char **info)
+{
+	if (!(*room = ft_memalloc(sizeof(t_room))))
 		return (0);
-	room->name = ft_strdup(info[0]);
-	room->x = ft_atoi(info[1]);
-	room->y = ft_atoi(info[2]);
-	room->links = 0;
-	room->nb_links = 0;
-	room->full = 0;
-	room->start = data->starting;
-	room->end = data->ending;
-	room->next = 0;
+	(*room)->name = ft_strdup(info[0]);
+	(*room)->x = ft_atoi(info[1]);
+	(*room)->y = ft_atoi(info[2]);
+	(*room)->links = 0;
+	(*room)->full = 0;
+	(*room)->start = data->starting;
+	(*room)->end = data->ending;
+	(*room)->next = 0;
 	return (1);
 }
 
 // check s'il n'y a pas d'erreur avec les booleens
 // check si les coordonnees sont des nombres compris entre 0 et intmax
-// si c'est la premiere room, renvoie 1, sinon check les rooms preecistantes
+// si c'est la premiere room, renvoie 1, sinon check les rooms preexistantes
 // qu'il n'y ai pas le meme nom ou memes coordonnees
 int		room_valid(t_data *data, char **info)
 {
@@ -46,7 +59,7 @@ int		room_valid(t_data *data, char **info)
 	if (!data->rooms)
 		return (1);
 	ptr = data->rooms;
-	while (ptr->next)
+	while (ptr)
 	{
 		if (ft_strequ(info[0], ptr->name) || (x == ptr->x && y == ptr->y))
 			return (0);
@@ -66,7 +79,7 @@ int		room_add(t_data *data, char **info)
 
 	room = 0;
 	if (data->rooms_over || !room_valid(data, info)
-		|| !room_initiliaze(data, room, info))
+		|| !room_initiliaze(data, &room, info))
 		return (0);
 	if (!data->rooms)
 		data->rooms = room;
