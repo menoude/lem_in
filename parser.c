@@ -58,6 +58,28 @@ void parser_parse_nb_ants(t_data *data)
 	data->nb_ants = (int)nb_ants;
 }
 
+// check si la ligne commence par "**", si on est pas deja aux liens,
+// si deux lignes de commandes se sont pas suivies,
+// si ya pas deja une room affectée à la commande
+int parser_manage_commands(t_data *data, char *info)
+{
+	if (info[0] != '#' || info[1] != '#' || data->rooms_over
+		|| data->start_announced || data->end_announced)
+		return (0);
+	else if (ft_strequ(info, "##start") && !data->start_room)
+	{
+		data->start_announced = 1;
+		return (1);
+	}
+	else if (ft_strequ(info, "##end") && !data->end_room)
+	{
+		data->end_announced = 1;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 // lit une ligne (hors commentaire) de l'input tant qu'il en reste
 // check que le tableau buffer fait 1 (tunnel) ou 3 (coordonnees) elements
 // active les booleens de start et end s'il le faut, pour la ligne suivante
@@ -76,12 +98,9 @@ void parser_parse_field_data(t_data *data)
 			parser_free(info);
 			return ;
 		}
-		if (len == 1 && ft_strequ(info[0], "##start"))
-			data->starting = 1;
-		else if (len == 1 && ft_strequ(info[0], "##end"))
-			data->ending = 1;
 		else if ((len == 3 && !room_add(data, info))
-				|| (len == 1 && !link_add(data, info[0])))
+				|| (len == 1 && !(parser_manage_commands(data, info[0])
+								|| link_add(data, info[0]))))
 		{
 			parser_free(info);
 			return ;

@@ -43,7 +43,8 @@ int link_valid(t_data *data, char **info)
 {
 	if (!info[0] || !info[1])
 		return (0);
-	else if (!room_exists(data, info[0]) || !room_exists(data, info[1]))
+	else if (!room_exists(data, info[0]) || !room_exists(data, info[1])
+			|| ft_strequ(info[0], info[1]))
 		return (0);
 	else if (!data->links)
 		return (1);
