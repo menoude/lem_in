@@ -14,9 +14,7 @@ struct s_room
 	int		x;
 	int		y;
 	t_room	*links;
-	int		full;
-	int		start;
-	int		end;
+	int		ants;
 	t_room	*next;
 };
 
@@ -61,6 +59,8 @@ void	room_free(t_room *rooms);
 void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
 int		link_initialize(t_link **link, char **info);
+int		link_exists(t_data *data, char *name1, char *name2);
+
 
 #endif
 

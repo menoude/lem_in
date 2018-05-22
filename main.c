@@ -67,8 +67,8 @@ int main(void)
 	initialize_data(&data);
 	parser_parse_nb_ants(&data);
 	parser_parse_field_data(&data);
+
 	print_data(&data);
-	// print_links(&data);
 	room_free(data.rooms);
 	return (0);
 }
