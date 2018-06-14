@@ -64,5 +64,4 @@ int		link_exists(t_data *data, char *name1, char *name2);
 
 #endif
 
-// mettre le header dans ft_isnumber dans la libft
 // il faut recracher toutes les instructions a la fin !!
