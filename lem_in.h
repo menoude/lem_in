@@ -64,7 +64,4 @@ int		link_initialize(t_link **link, char **info);
 
 // mettre le header dans ft_isnumber dans la libft
 
-// ya un truc a gerer pour start et end
-// genre si j'ai start et start, ou start et end qui se suivent
-// mais qu'il n'y a pas de salle entre les deux, ça doit pas le faire
-// Il doit pas non plus y avoir de start apres la fin des rooms
+// il faut recracher toutes les instructions a la fin !!
