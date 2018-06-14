@@ -12,7 +12,7 @@
 
 NAME = lem-in
 DIR_LIB = libft
-SRC = main.c parser.c room.c link.c
+SRC = main.c parser.c room.c link.c instructions.c
 BINARIES = $(SRC:.c=.o)
 CC = gcc -Wall -Werror -Wextra -g #enlever le -g
 

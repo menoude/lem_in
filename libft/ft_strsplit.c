@@ -40,7 +40,7 @@ char		**ft_strsplit(char const *s, char c)
 	int		j;
 	int		begin_word;
 
-	if (!s || !(tab = malloc(sizeof(char*) * ft_countwords(s, c) + 1)))
+	if (!s || !(tab = malloc(sizeof(char*) * (ft_countwords(s, c) + 1))))
 		return (0);
 	i = 0;
 	j = 0;

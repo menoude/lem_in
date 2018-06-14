@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include "./libft/includes/libft.h"
 
-typedef struct s_data t_data;
-typedef struct s_room t_room;
-typedef struct s_link t_link;
+typedef struct s_data			t_data;
+typedef struct s_room			t_room;
+typedef struct s_link			t_link;
+typedef struct s_instruction	t_instruction;
 
 struct s_room
 {
@@ -20,23 +21,30 @@ struct s_room
 
 struct s_link
 {
-		char *name1;
-		char *name2;
-		t_link *next;
+		char	*name1;
+		char	*name2;
+		t_link	*next;
+};
+
+struct s_instruction
+{
+		char 			*content;
+		t_instruction	*next;
 };
 
 struct s_data
 {
-	int		nb_ants;
-	t_room	*rooms;
-	int		nb_rooms;
-	int		rooms_over;
-	t_link	*links;
-	int		nb_links;
-	int		start_announced;
-	int		end_announced;
-	t_room	*start_room;
-	t_room	*end_room;
+	t_instruction	*instructions;
+	int				nb_ants;
+	t_room			*rooms;
+	int				nb_rooms;
+	int				rooms_over;
+	t_link			*links;
+	int				nb_links;
+	int				start_announced;
+	int				end_announced;
+	t_room			*start_room;
+	t_room			*end_room;
 };
 
 ////////////
@@ -45,7 +53,7 @@ void print_data(t_data *data);
 
 void error_message(void);
 
-char	**parser_parse_line(void);
+char	**parser_parse_line(t_data *data);
 void	parser_parse_nb_ants(t_data *data);
 void	parser_free(char **info);
 void	parser_parse_field_data(t_data *data);
@@ -61,7 +69,8 @@ int		link_add(t_data *data, char *link);
 int		link_initialize(t_link **link, char **info);
 int		link_exists(t_data *data, char *name1, char *name2);
 
+int instructions_add(t_data *data, char *input);
+void instructions_flush(t_data *data);
+
 
 #endif
-
-// il faut recracher toutes les instructions a la fin !!

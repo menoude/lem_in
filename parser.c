@@ -3,17 +3,17 @@
 // renvoie 0 si fin d'input ou erreur, ignore la ligne si elle commence par ##
 // split l'input qui est free
 // retourne le tableau d'elements parsés ou 0 s'il est vide ou pb (et le free)
-char **parser_parse_line(void)
+char **parser_parse_line(t_data *data)
 {
 	char *input;
 	char **info;
 
-	if (get_next_line(0, &input) <= 0)
+	if (get_next_line(0, &input) <= 0 || !instructions_add(data, input))
 		return (0);
 	while (input[0] == '#' && input[1] != '#')
 	{
 		free(input);
-		return (parser_parse_line());
+		return (parser_parse_line(data));
 	}
 	info = ft_strsplit(input, ' ');
 	free(input);
@@ -46,7 +46,7 @@ void parser_parse_nb_ants(t_data *data)
 	long int	nb_ants;
 	char		**info;
 
-	if (!(info = parser_parse_line()) || (info[1]) || !ft_isnumber(info[0]))
+	if (!(info = parser_parse_line(data)) || (info[1]) || !ft_isnumber(info[0]))
 	{
 		parser_free(info);
 		error_message();
@@ -91,7 +91,7 @@ void parser_parse_field_data(t_data *data)
 	char **info;
 	int len;
 
-	while ((info = parser_parse_line()))
+	while ((info = parser_parse_line(data)))
 	{
 		if ((len = ft_strtablen((const char **)info)) != 1 && len != 3)
 		{
