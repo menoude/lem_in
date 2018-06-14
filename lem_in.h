@@ -70,7 +70,6 @@ int		link_initialize(t_link **link, char **info);
 int		link_exists(t_data *data, char *name1, char *name2);
 
 int instructions_add(t_data *data, char *input);
-void instructions_flush(t_data *data);
-
+void instructions_flush(t_instruction *instructions);
 
 #endif

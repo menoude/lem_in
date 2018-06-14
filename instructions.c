@@ -21,17 +21,12 @@ int instructions_add(t_data *data, char *input)
 	return (1);
 }
 
-void instructions_flush(t_data *data)
+void instructions_flush(t_instruction *instructions)
 {
-	t_instruction *instruct;
-	t_instruction *instruct_next;
-
-	instruct_next = data->instructions;
-	while (instruct_next)
-	{
-		instruct = instruct_next;
-		instruct_next = instruct->next;
-		ft_printf("%s\n", instruct->content);
-		free(instruct);
-	}
+	if (!instructions)
+		return ;
+	ft_printf("%s\n", instructions->content);
+	instructions_flush(instructions->next);
+	free(instructions->content);
+	free(instructions);
 }

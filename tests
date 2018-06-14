@@ -1,0 +1,26 @@
+#same room name
+3
+a 4 5
+b 4 7
+a 4 6
+
+#same room coordinate
+3
+a 4 5
+b 4 5
+f 4 6
+
+#triple link
+3
+a 4 5
+b 1 5
+f 4 6
+a-b-f
+
+#link twice
+3
+a 4 5
+b 1 5
+f 4 6
+a-f
+a-f

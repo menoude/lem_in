@@ -70,7 +70,8 @@ int main(void)
 	parser_parse_field_data(&data);
 
 	print_data(&data);
-	instructions_flush(&data);
+	// seulement si c'était possible de la résoudre
+	instructions_flush(data.instructions);
 	room_free(data.rooms);
 	return (0);
 }

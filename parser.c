@@ -10,7 +10,8 @@ char **parser_parse_line(t_data *data)
 
 	if (get_next_line(0, &input) <= 0 || !instructions_add(data, input))
 		return (0);
-	while (input[0] == '#' && input[1] != '#')
+	while (input[0] == '#' && !ft_strequ(input, "##start")
+			&& !ft_strequ(input, "##end"))
 	{
 		free(input);
 		return (parser_parse_line(data));
