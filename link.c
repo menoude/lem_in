@@ -10,20 +10,6 @@ void link_free(t_link *links)
 	free(links);
 }
 
-int link_exists(t_data *data, char *name1, char *name2)
-{
-	t_link *ptr;
-
-	ptr = data->links;
-	while (ptr)
-	{
-		if (ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
-			return (1);
-		ptr = ptr->next;
-	}
-	return (0);
-}
-
 int link_initialize(t_link **link, char **info)
 {
 	if (!(*link = ft_memalloc(sizeof(t_link))))
@@ -32,6 +18,20 @@ int link_initialize(t_link **link, char **info)
 	(*link)->name2 = ft_strdup(info[1]);
 	(*link)->next = 0;
 	return (1);
+}
+
+int link_exists(t_data *data, char *name1, char *name2)
+{
+	t_link *ptr;
+
+	ptr = data->links;
+	while (ptr)
+	{
+		if (ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
+		return (1);
+		ptr = ptr->next;
+	}
+	return (0);
 }
 
 // check que le premier element et le deuxieme sont pas vides
@@ -43,9 +43,10 @@ int link_valid(t_data *data, char **info)
 {
 	if (!info[0] || !info[1])
 		return (0);
-	else if (!room_exists(data, info[0]) || !room_exists(data, info[1]))
+	else if (!room_exists(data, info[0]) || !room_exists(data, info[1])
+			|| ft_strequ(info[0], info[1]))
 		return (0);
-	else if (!data->links)
+	else if (!data->nb_links)
 		return (1);
 	else if (link_exists(data, info[0], info[1]))
 		return (0);

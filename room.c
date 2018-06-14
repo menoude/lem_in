@@ -24,7 +24,7 @@ int room_exists(t_data *data, char *name)
 }
 
 // initialise un nouveau maillon room et renvoie 0 en cas d'erreur
-int room_initiliaze(t_data *data, t_room **room, char **info)
+int room_initiliaze(t_room **room, char **info)
 {
 	if (!(*room = ft_memalloc(sizeof(t_room))))
 		return (0);
@@ -32,14 +32,13 @@ int room_initiliaze(t_data *data, t_room **room, char **info)
 	(*room)->x = ft_atoi(info[1]);
 	(*room)->y = ft_atoi(info[2]);
 	(*room)->links = 0;
-	(*room)->full = 0;
-	(*room)->start = data->starting;
-	(*room)->end = data->ending;
+	(*room)->ants = 0;
 	(*room)->next = 0;
 	return (1);
 }
 
 // check s'il n'y a pas d'erreur avec les booleens
+// check que la end ne soit pas deja la start
 // check si les coordonnees sont des nombres compris entre 0 et intmax
 // si c'est la premiere room, renvoie 1, sinon check les rooms preexistantes
 // qu'il n'y ai pas le meme nom ou memes coordonnees
@@ -49,8 +48,7 @@ int		room_valid(t_data *data, char **info)
 	long int x;
 	long int y;
 
-	if ((data->starting && data->ending)
-		|| !ft_isnumber(info[1]) || !ft_isnumber(info[2]))
+	if (!ft_isnumber(info[1]) || !ft_isnumber(info[2]))
 		return (0);
 	x = ft_atoi_long(info[1]);
 	y = ft_atoi_long(info[2]);
@@ -77,9 +75,8 @@ int		room_add(t_data *data, char **info)
 	t_room *room;
 	t_room *ptr;
 
-	room = 0;
 	if (data->rooms_over || !room_valid(data, info)
-		|| !room_initiliaze(data, &room, info))
+		|| !room_initiliaze(&room, info))
 		return (0);
 	if (!data->rooms)
 		data->rooms = room;
@@ -90,8 +87,12 @@ int		room_add(t_data *data, char **info)
 			ptr = ptr->next;
 		ptr->next = room;
 	}
-	data->starting = 0;
-	data->ending = 0;
+	if (data->start_announced)
+		data->start_room = room;
+	else if (data->end_announced)
+		data->end_room = room;
+	data->start_announced = 0;
+	data->end_announced = 0;
 	data->nb_rooms++;
 	return (1);
 }

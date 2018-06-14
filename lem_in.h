@@ -14,9 +14,7 @@ struct s_room
 	int		x;
 	int		y;
 	t_room	*links;
-	int		full;
-	int		start;
-	int		end;
+	int		ants;
 	t_room	*next;
 };
 
@@ -35,12 +33,14 @@ struct s_data
 	int		rooms_over;
 	t_link	*links;
 	int		nb_links;
-	int		starting;
-	int		ending;
+	int		start_announced;
+	int		end_announced;
+	t_room	*start_room;
+	t_room	*end_room;
 };
 
 ////////////
-void print_rooms(t_data *data);
+void print_data(t_data *data);
 /////////////
 
 void error_message(void);
@@ -52,16 +52,17 @@ void	parser_parse_field_data(t_data *data);
 
 int		room_valid(t_data *data, char **info);
 int		room_exists(t_data *data, char *name);
-int		room_initiliaze(t_data *data, t_room **room, char **info);
+int		room_initiliaze(t_room **room, char **info);
 int		room_add(t_data *data, char **info);
 void	room_free(t_room *rooms);
 
 void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
 int		link_initialize(t_link **link, char **info);
+int		link_exists(t_data *data, char *name1, char *name2);
+
 
 #endif
 
 // mettre le header dans ft_isnumber dans la libft
-
 // il faut recracher toutes les instructions a la fin !!
