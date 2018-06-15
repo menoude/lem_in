@@ -8,7 +8,6 @@ void error_message(void)
 
 void data_initialize(t_data *data)
 {
-	data->instructions = 0;
 	data->nb_ants = 0;
 	data->start_announced = 0;
 	data->end_announced = 0;
@@ -70,8 +69,6 @@ int main(void)
 	parser_parse_field_data(&data);
 
 	print_data(&data);
-	// seulement si c'était possible de la résoudre
-	instructions_flush(data.instructions);
 	room_free(data.rooms);
 	return (0);
 }

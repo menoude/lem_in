@@ -7,7 +7,6 @@
 typedef struct s_data			t_data;
 typedef struct s_room			t_room;
 typedef struct s_link			t_link;
-typedef struct s_instruction	t_instruction;
 
 struct s_room
 {
@@ -26,15 +25,8 @@ struct s_link
 		t_link	*next;
 };
 
-struct s_instruction
-{
-		char 			*content;
-		t_instruction	*next;
-};
-
 struct s_data
 {
-	t_instruction	*instructions;
 	int				nb_ants;
 	t_room			*rooms;
 	int				nb_rooms;
@@ -68,8 +60,5 @@ void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
 int		link_initialize(t_link **link, char **info);
 int		link_exists(t_data *data, char *name1, char *name2);
-
-int instructions_add(t_data *data, char *input);
-void instructions_flush(t_instruction *instructions);
 
 #endif

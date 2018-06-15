@@ -8,8 +8,9 @@ char **parser_parse_line(t_data *data)
 	char *input;
 	char **info;
 
-	if (get_next_line(0, &input) <= 0 || !instructions_add(data, input))
+	if (get_next_line(0, &input) <= 0)
 		return (0);
+	ft_printf("%s\n", input);
 	while (input[0] == '#' && !ft_strequ(input, "##start")
 			&& !ft_strequ(input, "##end"))
 	{
