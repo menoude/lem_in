@@ -1,0 +1,10 @@
+#same room name
+3
+##start
+a 4 5
+##end
+b 4 7
+c 6 7
+c 4 6
+a-b
+b-c

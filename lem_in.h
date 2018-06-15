@@ -7,6 +7,7 @@
 typedef struct s_data			t_data;
 typedef struct s_room			t_room;
 typedef struct s_link			t_link;
+typedef struct s_instruction	t_instruction;
 
 struct s_room
 {
@@ -25,8 +26,15 @@ struct s_link
 		t_link	*next;
 };
 
+struct s_instruction
+{
+		char 			*content;
+		t_instruction	*next;
+};
+
 struct s_data
 {
+	t_instruction	*instructions;
 	int				nb_ants;
 	t_room			*rooms;
 	int				nb_rooms;
@@ -35,6 +43,7 @@ struct s_data
 	int				nb_links;
 	int				start_announced;
 	int				end_announced;
+	int				nb_commands;
 	t_room			*start_room;
 	t_room			*end_room;
 };
@@ -43,7 +52,10 @@ struct s_data
 void print_data(t_data *data);
 /////////////
 
-void error_message(void);
+void	error_message(void);
+
+void	data_initialize(t_data *data);
+void	data_free(t_data *data);
 
 char	**parser_parse_line(t_data *data);
 void	parser_parse_nb_ants(t_data *data);
@@ -60,5 +72,12 @@ void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
 int		link_initialize(t_link **link, char **info);
 int		link_exists(t_data *data, char *name1, char *name2);
+
+int		solver_solve(t_data *data);
+
+int		instructions_add(t_data *data, char *input);
+void	instructions_print(t_instruction *instructions);
+void	instructions_free(t_instruction *instructions);
+
 
 #endif

@@ -8,9 +8,8 @@ char **parser_parse_line(t_data *data)
 	char *input;
 	char **info;
 
-	if (get_next_line(0, &input) <= 0)
+	if (get_next_line(0, &input) <= 0 || !instructions_add(data, input))
 		return (0);
-	ft_printf("%s\n", input);
 	while (input[0] == '#' && !ft_strequ(input, "##start")
 			&& !ft_strequ(input, "##end"))
 	{
@@ -66,16 +65,19 @@ void parser_parse_nb_ants(t_data *data)
 int parser_manage_commands(t_data *data, char *info)
 {
 	if (info[0] != '#' || info[1] != '#' || data->rooms_over
-		|| data->start_announced || data->end_announced)
+		|| data->start_announced || data->end_announced
+		|| data->nb_commands >= 2)
 		return (0);
 	else if (ft_strequ(info, "##start") && !data->start_room)
 	{
 		data->start_announced = 1;
+		data->nb_commands++;
 		return (1);
 	}
 	else if (ft_strequ(info, "##end") && !data->end_room)
 	{
 		data->end_announced = 1;
+		data->nb_commands++;
 		return (1);
 	}
 	else

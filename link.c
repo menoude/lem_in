@@ -27,7 +27,8 @@ int link_exists(t_data *data, char *name1, char *name2)
 	ptr = data->links;
 	while (ptr)
 	{
-		if (ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
+		if ((ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
+			|| (ft_strequ(ptr->name1, name2) && ft_strequ(ptr->name2, name1)))
 		return (1);
 		ptr = ptr->next;
 	}
@@ -64,7 +65,7 @@ int link_add(t_data *data, char *str)
 	data->rooms_over = 1;
 	info = ft_strsplit(str, '-');
 	link = 0;
-	if (ft_strtablen((const char **)info) != 2 || !link_valid(data, info)
+	if (data->nb_commands != 2 || ft_strtablen((const char **)info) != 2 || !link_valid(data, info)
 		|| !link_initialize(&link, info))
 	{
 		parser_free(info);
@@ -79,6 +80,7 @@ int link_add(t_data *data, char *str)
 			ptr = ptr->next;
 		ptr->next = link;
 	}
+	parser_free(info);
 	data->nb_links++;
 	return (1);
 }
