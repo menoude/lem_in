@@ -1,0 +1,14 @@
+3
+salleA 0 0
+salleB 1 1
+salleC 0 1
+salleD 1 0
+##start
+salleZ 2 2
+##end
+salleY 2 1
+salleY-salleA
+salleA-salleC
+salleC-salleB
+salleA-salleZ
+salleD-salleC

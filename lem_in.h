@@ -14,7 +14,8 @@ struct s_room
 	char	*name;
 	int		x;
 	int		y;
-	t_room	*links;
+	t_room	**links;
+	int		nb_links;
 	int		ants;
 	t_room	*next;
 };
@@ -70,7 +71,7 @@ void	room_free(t_room *rooms);
 
 void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
-int		link_initialize(t_link **link, char **info);
+int		link_initialize(t_data *data, t_link **link, char **info);
 int		link_exists(t_data *data, char *name1, char *name2);
 
 int		solver_solve(t_data *data);
@@ -78,6 +79,12 @@ int		solver_solve(t_data *data);
 int		instructions_add(t_data *data, char *input);
 void	instructions_print(t_instruction *instructions);
 void	instructions_free(t_instruction *instructions);
+
+t_room *finder_find_room(t_room *rooms, char *name);
+
+int		graph_allocate_room_space(t_data *data);
+void	graph_join_rooms(t_data *data);
+int		graph_create(t_data *data);
 
 
 #endif

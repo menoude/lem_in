@@ -2,14 +2,11 @@
 
 t_room *finder_find_room(t_room *rooms, char *name)
 {
-	t_room *ptr;
-
-	ptr = data->rooms;
-	while (ptr)
+	while (rooms)
 	{
-		if (ft_strequ(ptr->name), name))
-			return (ptr);
-		ptr = ptr->next;
+		if (ft_strequ(rooms->name, name))
+			return (rooms);
+		rooms = rooms->next;
 	}
 	return (0);
 }

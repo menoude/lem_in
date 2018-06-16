@@ -6,6 +6,7 @@ void	room_free(t_room *rooms)
 		return ;
 	room_free(rooms->next);
 	free(rooms->name);
+	free(rooms->links);
 	free(rooms);
 }
 
@@ -32,6 +33,7 @@ int room_initiliaze(t_room **room, char **info)
 	(*room)->x = ft_atoi(info[1]);
 	(*room)->y = ft_atoi(info[2]);
 	(*room)->links = 0;
+	(*room)->nb_links = 0;
 	(*room)->ants = 0;
 	(*room)->next = 0;
 	return (1);

@@ -10,13 +10,20 @@ void link_free(t_link *links)
 	free(links);
 }
 
-int link_initialize(t_link **link, char **info)
+int link_initialize(t_data *data, t_link **link, char **info)
 {
+	t_room *room1;
+	t_room *room2;
+
 	if (!(*link = ft_memalloc(sizeof(t_link))))
 		return (0);
 	(*link)->name1 = ft_strdup(info[0]);
 	(*link)->name2 = ft_strdup(info[1]);
 	(*link)->next = 0;
+	room1 = finder_find_room(data->rooms, (*link)->name1);
+	room1->nb_links++;
+	room2 = finder_find_room(data->rooms, (*link)->name2);
+	room2->nb_links++;
 	return (1);
 }
 
@@ -66,7 +73,7 @@ int link_add(t_data *data, char *str)
 	info = ft_strsplit(str, '-');
 	link = 0;
 	if (data->nb_commands != 2 || ft_strtablen((const char **)info) != 2 || !link_valid(data, info)
-		|| !link_initialize(&link, info))
+		|| !link_initialize(data, &link, info))
 	{
 		parser_free(info);
 		return (0);

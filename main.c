@@ -13,7 +13,7 @@ int main(void)
 	data_initialize(&data);
 	parser_parse_nb_ants(&data);
 	parser_parse_field_data(&data);
-	if (!solver_solve(&data))
+	if (!graph_create(&data) || !solver_solve(&data))
 	{
 		data_free(&data);
 		error_message();
