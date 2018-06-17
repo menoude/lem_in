@@ -1,51 +1,46 @@
 #include "lem_in.h"
 
-int graph_allocate_room_space(t_data *data)
+int graph_allocate_room_space(t_room *rooms)
 {
-	t_room	*ptr;
 	int		i;
 
-	ptr = data->rooms;
-	while (ptr)
+	while (rooms)
 	{
-		if (!(ptr->links = ft_memalloc(sizeof(t_room *) * ptr->nb_links)))
+		if (!(rooms->links = ft_memalloc(sizeof(t_room *) * rooms->nb_links)))
 			return (0);
 		i = -1;
-		while (++i < ptr->nb_links)
-			ptr->links[i] = 0;
-		ptr = ptr->next;
+		while (++i < rooms->nb_links)
+			rooms->links[i] = 0;
+		rooms = rooms->next;
 	}
 	return (1);
 }
 
-void graph_join_rooms(t_data *data)
+void graph_join_rooms(t_link *links)
 {
-	t_link *link;
 	t_room *room1;
 	t_room *room2;
-	int		i;
+	int i;
+	int j;
 
-	link = data->links;
-	while (link)
+	while (links)
 	{
-		room1 = finder_find_room(data->rooms, link->name1);
-		room2 = finder_find_room(data->rooms, link->name2);
-		i = 0;
-		while (room1->links[i])
-			i++;
+		room1 = links->room1;
+		room2 = links->room2;
+		i = room1->links_count;
+		j = room2->links_count;
 		room1->links[i] = room2;
-		i = 0;
-		while (room2->links[i])
-			i++;
-		room2->links[i] = room1;
-		link = link->next;
+		room2->links[j] = room1;
+		room1->links_count++;
+		room2->links_count++;
+		links = links->next;
 	}
 }
 
 int graph_create(t_data *data)
 {
-	if (!graph_allocate_room_space(data))
+	if (!graph_allocate_room_space(data->rooms))
 		return (0);
-	graph_join_rooms(data);
+	graph_join_rooms(data->links);
 	return (1);
 }

@@ -10,19 +10,17 @@ void	room_free(t_room *rooms)
 	free(rooms);
 }
 
-int room_exists(t_data *data, char *name)
+t_room *room_find(t_room *rooms, char *name)
 {
-	t_room *ptr;
-
-	ptr = data->rooms;
-	while (ptr)
+	while (rooms)
 	{
-		if (ft_strequ(ptr->name, name))
-			return (1);
-		ptr = ptr->next;
+		if (ft_strequ(rooms->name, name))
+			return (rooms);
+		rooms = rooms->next;
 	}
 	return (0);
 }
+
 
 // initialise un nouveau maillon room et renvoie 0 en cas d'erreur
 int room_initiliaze(t_room **room, char **info)
@@ -34,6 +32,7 @@ int room_initiliaze(t_room **room, char **info)
 	(*room)->y = ft_atoi(info[2]);
 	(*room)->links = 0;
 	(*room)->nb_links = 0;
+	(*room)->links_count = 0;
 	(*room)->ants = 0;
 	(*room)->next = 0;
 	return (1);

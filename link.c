@@ -5,39 +5,29 @@ void link_free(t_link *links)
 	if (!links)
 		return ;
 	link_free(links->next);
-	free(links->name1);
-	free(links->name2);
 	free(links);
 }
 
 int link_initialize(t_data *data, t_link **link, char **info)
 {
-	t_room *room1;
-	t_room *room2;
-
 	if (!(*link = ft_memalloc(sizeof(t_link))))
 		return (0);
-	(*link)->name1 = ft_strdup(info[0]);
-	(*link)->name2 = ft_strdup(info[1]);
+	(*link)->room1 = room_find(data->rooms, info[0]);
+	(*link)->room2 = room_find(data->rooms, info[1]);
 	(*link)->next = 0;
-	room1 = finder_find_room(data->rooms, (*link)->name1);
-	room1->nb_links++;
-	room2 = finder_find_room(data->rooms, (*link)->name2);
-	room2->nb_links++;
+	(*link)->room1->nb_links++;
+	(*link)->room2->nb_links++;
 	return (1);
 }
 
-int link_exists(t_data *data, char *name1, char *name2)
+int link_exists(t_link *links, char *name1, char *name2)
 {
-	t_link *ptr;
-
-	ptr = data->links;
-	while (ptr)
+	while (links)
 	{
-		if ((ft_strequ(ptr->name1, name1) && ft_strequ(ptr->name2, name2))
-			|| (ft_strequ(ptr->name1, name2) && ft_strequ(ptr->name2, name1)))
+		if ((ft_strequ(links->room1->name, name1) && ft_strequ(links->room2->name, name2))
+			|| (ft_strequ(links->room1->name, name2) && ft_strequ(links->room2->name, name1)))
 		return (1);
-		ptr = ptr->next;
+		links = links->next;
 	}
 	return (0);
 }
@@ -51,12 +41,12 @@ int link_valid(t_data *data, char **info)
 {
 	if (!info[0] || !info[1])
 		return (0);
-	else if (!room_exists(data, info[0]) || !room_exists(data, info[1])
-			|| ft_strequ(info[0], info[1]))
+	else if (ft_strequ(info[0], info[1]) || !room_find(data->rooms, info[0])
+			|| !room_find(data->rooms, info[1]))
 		return (0);
 	else if (!data->nb_links)
 		return (1);
-	else if (link_exists(data, info[0], info[1]))
+	else if (link_exists(data->links, info[0], info[1]))
 		return (0);
 	else
 		return (1);

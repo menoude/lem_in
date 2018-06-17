@@ -30,7 +30,7 @@ void print_data(t_data *data)
 	{
 		while (link)
 		{
-			ft_printf("%s <-> %s\n", link->name1, link->name2);
+			ft_printf("%s <-> %s\n", link->room1->name, link->room2->name);
 			link = link->next;
 		}
 	}

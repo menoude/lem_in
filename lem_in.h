@@ -16,14 +16,15 @@ struct s_room
 	int		y;
 	t_room	**links;
 	int		nb_links;
+	int		links_count;
 	int		ants;
 	t_room	*next;
 };
 
 struct s_link
 {
-		char	*name1;
-		char	*name2;
+		t_room	*room1;
+		t_room	*room2;
 		t_link	*next;
 };
 
@@ -64,7 +65,7 @@ void	parser_free(char **info);
 void	parser_parse_field_data(t_data *data);
 
 int		room_valid(t_data *data, char **info);
-int		room_exists(t_data *data, char *name);
+t_room	*room_find(t_room *rooms, char *name);
 int		room_initiliaze(t_room **room, char **info);
 int		room_add(t_data *data, char **info);
 void	room_free(t_room *rooms);
@@ -72,7 +73,7 @@ void	room_free(t_room *rooms);
 void	link_free(t_link *links);
 int		link_add(t_data *data, char *link);
 int		link_initialize(t_data *data, t_link **link, char **info);
-int		link_exists(t_data *data, char *name1, char *name2);
+int		link_exists(t_link *links, char *name1, char *name2);
 
 int		solver_solve(t_data *data);
 
@@ -80,10 +81,8 @@ int		instructions_add(t_data *data, char *input);
 void	instructions_print(t_instruction *instructions);
 void	instructions_free(t_instruction *instructions);
 
-t_room *finder_find_room(t_room *rooms, char *name);
-
-int		graph_allocate_room_space(t_data *data);
-void	graph_join_rooms(t_data *data);
+int		graph_allocate_room_space(t_room *rooms);
+void	graph_join_rooms(t_link *links);
 int		graph_create(t_data *data);
 
 
