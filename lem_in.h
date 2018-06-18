@@ -8,6 +8,8 @@ typedef struct s_data			t_data;
 typedef struct s_room			t_room;
 typedef struct s_link			t_link;
 typedef struct s_instruction	t_instruction;
+typedef struct s_node			t_node;
+typedef struct s_queue			t_queue;
 
 struct s_room
 {
@@ -32,6 +34,18 @@ struct s_instruction
 {
 		char 			*content;
 		t_instruction	*next;
+};
+
+struct s_node
+{
+		t_room 			**path;
+		int				path_size;
+};
+
+struct s_queue
+{
+		t_node 			**content;
+		int				path_size;
 };
 
 struct s_data
@@ -83,7 +97,11 @@ void	instructions_free(t_instruction *instructions);
 
 int		graph_allocate_room_space(t_room *rooms);
 void	graph_join_rooms(t_link *links);
-int		graph_create(t_data *data);
+int		graph_new(t_data *data);
 
+void		node_free(t_node *node);
+t_room		*node_state(t_node *node);
+int			node_is_success(t_data *data, t_node *node);
+t_node		*node_new(t_node *node, t_room *room);
 
 #endif

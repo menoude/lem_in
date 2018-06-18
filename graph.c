@@ -37,7 +37,7 @@ void graph_join_rooms(t_link *links)
 	}
 }
 
-int graph_create(t_data *data)
+int graph_new(t_data *data)
 {
 	if (!graph_allocate_room_space(data->rooms))
 		return (0);
