@@ -14,6 +14,7 @@ void data_initialize(t_data *data)
 	data->nb_links = 0;
 	data->start_room = 0;
 	data->end_room = 0;
+	data->queue = 0;
 }
 
 void data_free(t_data *data)
@@ -21,4 +22,5 @@ void data_free(t_data *data)
 	instructions_free(data->instructions);
 	room_free(data->rooms);
 	link_free(data->links);
+	queue_free(data->queue);
 }

@@ -2,6 +2,8 @@
 
 void		node_free(t_node *node)
 {
+	if (!node)
+		return ;
 	free(node->path);
 	free(node);
 }
@@ -18,24 +20,45 @@ int			node_is_success(t_data *data, t_node *node)
 
 t_node		*node_new(t_node *node, t_room *room)
 {
-	t_room **new_path;
+	t_node *new_node;
 
+	if (!(new_node = ft_memalloc(sizeof(t_node))))
+		return (0);
 	if (!node)
 	{
-		if (!(node = ft_memalloc(sizeof(t_node)))
-			|| !(node->path = ft_memalloc(sizeof(t_room *))))
+		if (!(new_node->path = ft_memalloc(sizeof(t_room *))))
 			return (0);
-		node->path[0] = room;
-		node->path_size = 1;
+		new_node->path[0] = room;
+		new_node->path_size = 1;
 	}
 	else
 	{
-		if (!(new_path = ft_memalloc(sizeof(t_room *) * (node->path_size + 1))))
+		if (!(new_node->path = ft_memalloc(sizeof(t_room *) * (node->path_size + 1))))
 			return (0);
-		ft_memmove(node->path, new_path, sizeof(node->path));
-		new_path[node->path_size++] = room;
-		free(node->path);
-		node->path = new_path;
+		ft_memmove(node->path, new_node->path, sizeof(node->path));
+		new_node->path[node->path_size++] = room;
 	}
-	return (node);
+	new_node->next = 0;
+	return (new_node);
+}
+
+// faire le check que la room peut etre extended en dehors de cette fonction !!
+// elle ne retourne 0 que si ya un probleme de malloc
+t_node		*node_expand(t_node *node)
+{
+	t_room	*room;
+	t_node	*queue;
+	t_node	*new;
+	int		i;
+
+	room = node_state(node);
+	queue = 0;
+	i = 0;
+	while (++i < room->nb_links)
+	{
+		if (!(new = node_new(node, room->links[i])))
+			return (0);
+		queue_enqueue(&queue, new);
+	}
+	return (queue);
 }

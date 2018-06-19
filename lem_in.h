@@ -40,12 +40,7 @@ struct s_node
 {
 		t_room 			**path;
 		int				path_size;
-};
-
-struct s_queue
-{
-		t_node 			**content;
-		int				path_size;
+		t_node			*next;
 };
 
 struct s_data
@@ -62,6 +57,7 @@ struct s_data
 	int				nb_commands;
 	t_room			*start_room;
 	t_room			*end_room;
+	t_node			*queue;
 };
 
 ////////////
@@ -89,7 +85,7 @@ int		link_add(t_data *data, char *link);
 int		link_initialize(t_data *data, t_link **link, char **info);
 int		link_exists(t_link *links, char *name1, char *name2);
 
-int		solver_solve(t_data *data);
+t_node	*solver_solve(t_data *data);
 
 int		instructions_add(t_data *data, char *input);
 void	instructions_print(t_instruction *instructions);
@@ -99,9 +95,14 @@ int		graph_allocate_room_space(t_room *rooms);
 void	graph_join_rooms(t_link *links);
 int		graph_new(t_data *data);
 
-void		node_free(t_node *node);
-t_room		*node_state(t_node *node);
-int			node_is_success(t_data *data, t_node *node);
-t_node		*node_new(t_node *node, t_room *room);
+void	node_free(t_node *node);
+t_room	*node_state(t_node *node);
+int		node_is_success(t_data *data, t_node *node);
+t_node	*node_new(t_node *node, t_room *room);
+t_node	*node_expand(t_node *node);
+
+void	queue_free(t_node *queue);
+void	queue_enqueue(t_node **queue, t_node *node);
+t_node	*queue_dequeue(t_node **queue);
 
 #endif
