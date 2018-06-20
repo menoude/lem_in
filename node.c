@@ -33,10 +33,12 @@ t_node		*node_new(t_node *node, t_room *room)
 	}
 	else
 	{
-		if (!(new_node->path = ft_memalloc(sizeof(t_room *) * (node->path_size + 1))))
+		if (!(new_node->path = ft_memalloc(sizeof(t_room *)
+								* (node->path_size + 1))))
 			return (0);
-		ft_memmove(node->path, new_node->path, sizeof(node->path));
-		new_node->path[node->path_size++] = room;
+		ft_memmove(new_node->path, node->path, sizeof(node->path));
+		new_node->path[node->path_size] = room;
+		new_node->path_size = node->path_size + 1;
 	}
 	new_node->next = 0;
 	return (new_node);

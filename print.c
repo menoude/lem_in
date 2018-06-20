@@ -36,3 +36,20 @@ void print_data(t_data *data)
 	}
 	ft_printf("----------------\n\n");
 }
+
+void print_queue(t_node *queue)
+{
+	int i;
+
+	ft_printf("queue: ");
+	if (!queue)
+		ft_printf("no queue");
+	while (queue)
+	{
+		i = -1;
+		while (++i < queue->path_size)
+			ft_printf("%s ", queue->path[i]->name);
+		queue = queue->next;
+	}
+	ft_printf("\n");
+}

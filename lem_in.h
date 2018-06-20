@@ -62,6 +62,7 @@ struct s_data
 
 ////////////
 void print_data(t_data *data);
+void print_queue(t_node *queue);
 /////////////
 
 void	error_message(void);
