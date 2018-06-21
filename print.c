@@ -39,17 +39,16 @@ void print_data(t_data *data)
 
 void print_queue(t_node *queue)
 {
-	int i;
-
 	ft_printf("queue: ");
-	if (!queue)
-		ft_printf("no queue");
 	while (queue)
 	{
-		i = -1;
-		while (++i < queue->path_size)
-			ft_printf("%s ", queue->path[i]->name);
+		ft_printf("%s ", node_state(queue)->name);
 		queue = queue->next;
 	}
 	ft_printf("\n");
+}
+
+void print_node(t_node *node)
+{
+	ft_printf("node: %s\n", node->path[node->path_size - 1]->name);
 }

@@ -12,20 +12,18 @@ int main(void)
 
 	data_initialize(&data);
 	parser_parse_nb_ants(&data);
-	ft_printf("a\n");
+	ft_printf("parsed ants\n");
 	parser_parse_field_data(&data);
-	ft_printf("b\n");
+	ft_printf("parse rest of data\n");
 	if (!graph_new(&data) || !solver_solve(&data))
 	{
-		ft_printf("c\n");
+		ft_printf("problem, free everything\n");
 		data_free(&data);
 		error_message();
 	}
-	ft_printf("d\n");
 	instructions_print(data.instructions);
 
 	print_data(&data);
-	ft_printf("e\n");
 
 	data_free(&data);
 	return (0);

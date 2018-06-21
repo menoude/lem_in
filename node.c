@@ -55,7 +55,7 @@ t_node		*node_expand(t_node *node)
 
 	room = node_state(node);
 	queue = 0;
-	i = 0;
+	i = -1;
 	while (++i < room->nb_links)
 	{
 		if (!(new = node_new(node, room->links[i])))
