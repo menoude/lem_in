@@ -9,22 +9,18 @@ void error_message(void)
 int main(void)
 {
 	t_data	data;
+	t_node *path;
 
 	data_initialize(&data);
 	parser_parse_nb_ants(&data);
-	ft_printf("parsed ants\n");
 	parser_parse_field_data(&data);
-	ft_printf("parse rest of data\n");
-	if (!graph_new(&data) || !solver_solve(&data))
+	path = 0;
+	if (!graph_new(&data) || !(path = solver_solve(&data))
+		|| !ants_traverse(&data, path))
 	{
-		ft_printf("problem, free everything\n");
 		data_free(&data);
 		error_message();
 	}
-	instructions_print(data.instructions);
-
-	// print_data(&data);
-
 	data_free(&data);
 	return (0);
 }

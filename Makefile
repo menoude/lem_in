@@ -14,7 +14,7 @@ NAME = lem-in
 DIR_LIB = libft
 SRC = main.c parser.c instructions.c data.c\
 		room.c link.c graph.c solver.c node.c\
-		queue.c\
+		queue.c ants.c\
 	 	print.c #enlever print.c
 BINARIES = $(SRC:.c=.o)
 CC = gcc -Wall -Werror -Wextra -g #enlever le -g

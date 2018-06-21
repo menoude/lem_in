@@ -107,4 +107,9 @@ void	queue_free(t_node *queue);
 void	queue_enqueue(t_node **queue, t_node *node);
 t_node	*queue_dequeue(t_node **queue);
 
+int		ants_cleared(int *ants, int nb_ants, int path_size);
+void 	ants_move(int *ants, int nb_ants);
+void	ants_display(int *ants, int nb_ants, t_room **path, int path_size);
+int		ants_traverse(t_data *data, t_node *path);
+
 #endif

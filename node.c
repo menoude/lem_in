@@ -36,7 +36,7 @@ t_node		*node_new(t_node *node, t_room *room)
 		if (!(new_node->path = ft_memalloc(sizeof(t_room *)
 								* (node->path_size + 1))))
 			return (0);
-		ft_memmove(new_node->path, node->path, sizeof(node->path));
+		ft_memmove(new_node->path, node->path, sizeof(t_room *) * node->path_size);
 		new_node->path[node->path_size] = room;
 		new_node->path_size = node->path_size + 1;
 	}
@@ -60,6 +60,6 @@ t_node		*node_expand(t_node *node)
 			return (0);
 		queue_enqueue(&queue, new);
 	}
-	room->expanded = 1;
+	node_free(node);
 	return (queue);
 }
