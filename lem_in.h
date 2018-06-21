@@ -9,7 +9,6 @@ typedef struct s_room			t_room;
 typedef struct s_link			t_link;
 typedef struct s_instruction	t_instruction;
 typedef struct s_node			t_node;
-typedef struct s_queue			t_queue;
 
 struct s_room
 {
@@ -20,6 +19,7 @@ struct s_room
 	int		nb_links;
 	int		links_count;
 	int		ants;
+	int		expanded;
 	t_room	*next;
 };
 
@@ -99,7 +99,7 @@ int		graph_new(t_data *data);
 
 void	node_free(t_node *node);
 t_room	*node_state(t_node *node);
-int		node_is_success(t_data *data, t_node *node);
+int		node_is_success(t_data *data, t_room *room);
 t_node	*node_new(t_node *node, t_room *room);
 t_node	*node_expand(t_node *node);
 

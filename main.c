@@ -23,7 +23,7 @@ int main(void)
 	}
 	instructions_print(data.instructions);
 
-	print_data(&data);
+	// print_data(&data);
 
 	data_free(&data);
 	return (0);

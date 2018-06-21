@@ -6,6 +6,7 @@ t_node *solver_solve(t_data *data)
 {
 	t_node *queue;
 	t_node *node;
+	t_room *room;
 	t_node *expanded_node;
 
 	ft_printf("entered solver\n");
@@ -25,17 +26,18 @@ t_node *solver_solve(t_data *data)
 			return (0);
 		print_queue(queue);
 		print_node(node);
-		if (node_is_success(data, node))
+		room = node_state(node);
+		if (node_is_success(data, room))
 		{
 			ft_printf("reached end room %s\n", node_state(node)->name);
 			return (node);
 		}
 		ft_printf("node is not success\n");
-		print_queue(expanded_node);
-		if (node_state(node)->nb_links)
+		if (!room->expanded && room->nb_links)
 		{
 			expanded_node = node_expand(node);
 			ft_printf("expanded node --> ");
+			print_queue(expanded_node);
 			queue_enqueue(&queue, expanded_node);
 		}
 		print_queue(queue);

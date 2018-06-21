@@ -34,6 +34,7 @@ int room_initiliaze(t_room **room, char **info)
 	(*room)->nb_links = 0;
 	(*room)->links_count = 0;
 	(*room)->ants = 0;
+	(*room)->expanded = 0;
 	(*room)->next = 0;
 	return (1);
 }
