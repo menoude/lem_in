@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   node.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:42:48 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:50:05 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void		node_free(t_node *node)
@@ -36,7 +48,8 @@ t_node		*node_new(t_node *node, t_room *room)
 		if (!(new_node->path = ft_memalloc(sizeof(t_room *)
 								* (node->path_size + 1))))
 			return (0);
-		ft_memmove(new_node->path, node->path, sizeof(t_room *) * node->path_size);
+		ft_memmove(new_node->path, node->path,
+					sizeof(t_room *) * node->path_size);
 		new_node->path[node->path_size] = room;
 		new_node->path_size = node->path_size + 1;
 	}
@@ -52,6 +65,7 @@ t_node		*node_expand(t_node *node)
 	int		i;
 
 	room = node_state(node);
+	room->expanded = 1;
 	queue = 0;
 	i = -1;
 	while (++i < room->nb_links)

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instructions.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:42:29 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:47:34 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-int instructions_add(t_data *data, char *input)
+int		instructions_add(t_data *data, char *input)
 {
 	t_instruction *ptr;
 	t_instruction *new_instruct;
@@ -21,7 +33,7 @@ int instructions_add(t_data *data, char *input)
 	return (1);
 }
 
-void instructions_print(t_instruction *instructions)
+void	instructions_print(t_instruction *instructions)
 {
 	while (instructions)
 	{
@@ -30,7 +42,7 @@ void instructions_print(t_instruction *instructions)
 	}
 }
 
-void instructions_free(t_instruction *instructions)
+void	instructions_free(t_instruction *instructions)
 {
 	t_instruction *ptr;
 

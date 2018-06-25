@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   graph.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:42:25 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:47:11 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-int graph_allocate_room_space(t_room *rooms)
+int		graph_allocate_room_space(t_room *rooms)
 {
 	int		i;
 
@@ -16,12 +28,12 @@ int graph_allocate_room_space(t_room *rooms)
 	return (1);
 }
 
-void graph_join_rooms(t_link *links)
+void	graph_join_rooms(t_link *links)
 {
-	t_room *room1;
-	t_room *room2;
-	int i;
-	int j;
+	t_room	*room1;
+	t_room	*room2;
+	int		i;
+	int		j;
 
 	while (links)
 	{
@@ -37,7 +49,7 @@ void graph_join_rooms(t_link *links)
 	}
 }
 
-int graph_new(t_data *data)
+int		graph_new(t_data *data)
 {
 	if (!graph_allocate_room_space(data->rooms))
 		return (0);

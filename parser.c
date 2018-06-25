@@ -1,9 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:50:12 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:55:19 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-// renvoie 0 si fin d'input ou erreur, ignore la ligne si elle commence par ##
-// split l'input qui est free
-// retourne le tableau d'elements parsés ou 0 s'il est vide ou pb (et le free)
-char **parser_parse_line(t_data *data)
+char	**parser_parse_line(t_data *data)
 {
 	char *input;
 	char **info;
@@ -26,8 +35,7 @@ char **parser_parse_line(t_data *data)
 	return (info);
 }
 
-// free tout le tab s'il n'est pas null
-void parser_free(char **info)
+void	parser_free(char **info)
 {
 	int i;
 
@@ -39,10 +47,7 @@ void parser_free(char **info)
 	free(info);
 }
 
-// check que la premiere ligne (hors commentaire) ne contient qu'un element
-//  que c'est un nombre, qu'il est compris entre 1 et intmax
-// free toujours le tableau buffer et met a jour data si tout va bien
-void parser_parse_nb_ants(t_data *data)
+void	parser_parse_nb_ants(t_data *data)
 {
 	long int	nb_ants;
 	char		**info;
@@ -59,10 +64,7 @@ void parser_parse_nb_ants(t_data *data)
 	data->nb_ants = (int)nb_ants;
 }
 
-// check si la ligne commence par "**", si on est pas deja aux liens,
-// si deux lignes de commandes se sont pas suivies,
-// si ya pas deja une room affectée à la commande
-int parser_manage_commands(t_data *data, char *info)
+int		parser_manage_commands(t_data *data, char *info)
 {
 	if (info[0] != '#' || info[1] != '#' || data->rooms_over
 		|| data->start_announced || data->end_announced
@@ -84,16 +86,10 @@ int parser_manage_commands(t_data *data, char *info)
 		return (0);
 }
 
-// lit une ligne (hors commentaire) de l'input tant qu'il en reste
-// check que le tableau buffer fait 1 (tunnel) ou 3 (coordonnees) elements
-// active les booleens de start et end s'il le faut, pour la ligne suivante
-// appelle les fonctions qu'il faut pour ajouter aux rooms et links
-// si une des fonctions renvoie 0 ou si elements != 1 ou 3 la lecture s'arrete
-// free toujours le tableau buffer
-void parser_parse_field_data(t_data *data)
+void	parser_parse_field_data(t_data *data)
 {
-	char **info;
-	int len;
+	char	**info;
+	int		len;
 
 	while ((info = parser_parse_line(data)))
 	{

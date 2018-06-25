@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   room.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:51:48 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:55:34 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void	room_free(t_room *rooms)
@@ -10,7 +22,7 @@ void	room_free(t_room *rooms)
 	free(rooms);
 }
 
-t_room *room_find(t_room *rooms, char *name)
+t_room	*room_find(t_room *rooms, char *name)
 {
 	while (rooms)
 	{
@@ -21,9 +33,7 @@ t_room *room_find(t_room *rooms, char *name)
 	return (0);
 }
 
-
-// initialise un nouveau maillon room et renvoie 0 en cas d'erreur
-int room_initiliaze(t_room **room, char **info)
+int		room_initialize(t_room **room, char **info)
 {
 	if (!(*room = ft_memalloc(sizeof(t_room))))
 		return (0);
@@ -39,18 +49,13 @@ int room_initiliaze(t_room **room, char **info)
 	return (1);
 }
 
-// check s'il n'y a pas d'erreur avec les booleens
-// check que la end ne soit pas deja la start
-// check si les coordonnees sont des nombres compris entre 0 et intmax
-// si c'est la premiere room, renvoie 1, sinon check les rooms preexistantes
-// qu'il n'y ai pas le meme nom ou memes coordonnees
 int		room_valid(t_data *data, char **info)
 {
-	t_room *ptr;
-	long int x;
-	long int y;
+	t_room		*ptr;
+	long int	x;
+	long int	y;
 
-	if (!ft_isnumber(info[1]) || !ft_isnumber(info[2]))
+	if (info[0][0] == 'L' || !ft_isnumber(info[1]) || !ft_isnumber(info[2]))
 		return (0);
 	x = ft_atoi_long(info[1]);
 	y = ft_atoi_long(info[2]);
@@ -68,17 +73,13 @@ int		room_valid(t_data *data, char **info)
 	return (1);
 }
 
-// check qu'on en soit pas deja aux liens, que la room est au bon format
-// qu'elle n'existe pas encore en termes de coordonnees, puis la crée
-// check qu'il n'y a pas de pb a la creation, puis la place au bon endroit
-// de la liste chainee. Reset start et end et incremente le nb de rooms
 int		room_add(t_data *data, char **info)
 {
 	t_room *room;
 	t_room *ptr;
 
 	if (data->rooms_over || !room_valid(data, info)
-		|| !room_initiliaze(&room, info))
+		|| !room_initialize(&room, info))
 		return (0);
 	if (!data->rooms)
 		data->rooms = room;

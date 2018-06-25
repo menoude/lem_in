@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   link.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/25 22:42:32 by meyami            #+#    #+#             */
+/*   Updated: 2018/06/25 22:54:39 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-void link_free(t_link *links)
+void	link_free(t_link *links)
 {
 	if (!links)
 		return ;
@@ -8,7 +20,7 @@ void link_free(t_link *links)
 	free(links);
 }
 
-int link_initialize(t_data *data, t_link **link, char **info)
+int		link_initialize(t_data *data, t_link **link, char **info)
 {
 	if (!(*link = ft_memalloc(sizeof(t_link))))
 		return (0);
@@ -20,24 +32,21 @@ int link_initialize(t_data *data, t_link **link, char **info)
 	return (1);
 }
 
-int link_exists(t_link *links, char *name1, char *name2)
+int		link_exists(t_link *links, char *name1, char *name2)
 {
 	while (links)
 	{
-		if ((ft_strequ(links->room1->name, name1) && ft_strequ(links->room2->name, name2))
-			|| (ft_strequ(links->room1->name, name2) && ft_strequ(links->room2->name, name1)))
-		return (1);
+		if ((ft_strequ(links->room1->name, name1)
+			&& ft_strequ(links->room2->name, name2))
+			|| (ft_strequ(links->room1->name, name2)
+				&& ft_strequ(links->room2->name, name1)))
+			return (1);
 		links = links->next;
 	}
 	return (0);
 }
 
-// check que le premier element et le deuxieme sont pas vides
-// si c'est le premier link c'est bon
-// checker que les deux noms existent
-// checker la liste des links et verifier qu'un identique n'existe pas deja
-// renvoyer 1
-int link_valid(t_data *data, char **info)
+int		link_valid(t_data *data, char **info)
 {
 	if (!info[0] || !info[1])
 		return (0);
@@ -52,8 +61,7 @@ int link_valid(t_data *data, char **info)
 		return (1);
 }
 
-// termine le parsing des rooms, split le buffer autour de '-'
-int link_add(t_data *data, char *str)
+int		link_add(t_data *data, char *str)
 {
 	char	**info;
 	t_link	*link;
@@ -62,8 +70,8 @@ int link_add(t_data *data, char *str)
 	data->rooms_over = 1;
 	info = ft_strsplit(str, '-');
 	link = 0;
-	if (data->nb_commands != 2 || ft_strtablen((const char **)info) != 2 || !link_valid(data, info)
-		|| !link_initialize(data, &link, info))
+	if (data->nb_commands != 2 || ft_strtablen((const char **)info) != 2
+		|| !link_valid(data, info) || !link_initialize(data, &link, info))
 	{
 		parser_free(info);
 		return (0);
